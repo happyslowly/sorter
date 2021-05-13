@@ -35,7 +35,6 @@ pub use selectionsort::SelectionSort;
 mod tests {
     use super::*;
     use rand::prelude::*;
-    use std::time::SystemTime;
 
     fn generate(count: usize) -> Vec<i32> {
         let mut v = vec![0; count];
@@ -55,45 +54,42 @@ mod tests {
         true
     }
 
-    fn test<S>()
+    fn do_test<S>()
     where
         S: Sorter,
     {
         let mut a = generate(5000);
-        let now = SystemTime::now();
         sort::<_, S>(&mut a);
-        let t = now.elapsed().unwrap().as_millis();
-        println!("{} duration: {}(ms)", std::any::type_name::<S>(), t);
         assert!(sorted(&a));
     }
 
     #[test]
     fn test_bubblesort() {
-        test::<bubblesort::BubbleSort>();
+        do_test::<bubblesort::BubbleSort>();
     }
 
     #[test]
     fn test_insertionsort() {
-        test::<insertionsort::InsertionSort>();
+        do_test::<insertionsort::InsertionSort>();
     }
 
     #[test]
     fn test_selectionsort() {
-        test::<selectionsort::SelectionSort>();
+        do_test::<selectionsort::SelectionSort>();
     }
 
     #[test]
     fn test_quicksort() {
-        test::<quicksort::QuickSort>();
+        do_test::<quicksort::QuickSort>();
     }
 
     #[test]
     fn test_mergesort() {
-        test::<mergesort::MergeSort>();
+        do_test::<mergesort::MergeSort>();
     }
 
     #[test]
     fn test_heapsort() {
-        test::<heapsort::HeapSort>();
+        do_test::<heapsort::HeapSort>();
     }
 }
